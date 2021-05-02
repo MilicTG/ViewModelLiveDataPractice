@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 
 class SplitFragmentOne : Fragment() {
 
@@ -13,6 +16,31 @@ class SplitFragmentOne : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return inflater.inflate(R.layout.fragment_split_one, container, false)
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.findViewById<TextView>(R.id.fragment_split_one_text_view).text =
+            getString(R.string.total, 0)
+
+        prepareViewModel()
+    }
+
+    private fun prepareViewModel() {
+        val totalViewModel = ViewModelProvider(this).get(TotalsViewModel::class.java)
+
+        updateText(totalViewModel.total)
+
+        view?.findViewById<Button>(R.id.fragment_split_one_button)?.setOnClickListener {
+            updateText(totalViewModel.increaseTotal())
+        }
+    }
+
+
+    private fun updateText(total: Int) {
+        view?.findViewById<TextView>(R.id.fragment_split_one_text_view)?.text =
+            getString(R.string.total, total)
+    }
+
 }
