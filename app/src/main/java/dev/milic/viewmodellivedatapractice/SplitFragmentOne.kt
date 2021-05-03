@@ -30,22 +30,10 @@ class SplitFragmentOne : Fragment() {
             }
         )
 
-        view.findViewById<TextView>(R.id.fragment_split_one_text_view).text =
-            getString(R.string.total, 0)
-
-        prepareViewModel()
-    }
-
-    private fun prepareViewModel() {
-
-
-        updateText(totalViewModel.total)
-
-        view?.findViewById<Button>(R.id.fragment_split_one_button)?.setOnClickListener {
-            updateText(totalViewModel.increaseTotal())
+        view.findViewById<Button>(R.id.fragment_split_one_button).setOnClickListener {
+            totalViewModel.increaseTotal()
         }
     }
-
 
     private fun updateText(total: Int) {
         view?.findViewById<TextView>(R.id.fragment_split_one_text_view)?.text =
